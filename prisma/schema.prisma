@@ -1,0 +1,107 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String             @id @default(cuid())
+  name         String
+  email        String             @unique
+  password     String?
+  role         String             @default("STUDENT") // STUDENT | ADMIN | REGISTRAR
+  rollNo       String?            @unique
+  department   String?            @default("Information Technology (IT)")
+  program      String?            @default("B.Tech")
+  batch        String?            @default("2024-2026")
+  phone        String?            @default("+91 98765 43210")
+  requests     Request[]
+  approvals    Approval[]
+  certificates Certificate[]
+  documents    AcademicDocument[]
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+}
+
+model CertificateType {
+  id           String        @id @default(cuid())
+  name         String
+  code         String        @unique
+  fee          Int           @default(0)
+  requests     Request[]
+  certificates Certificate[]
+  createdAt    DateTime      @default(now())
+}
+
+model Request {
+  id          String           @id @default(cuid())
+  studentId   String
+  student     User             @relation(fields: [studentId], references: [id])
+  typeId      String
+  type        CertificateType  @relation(fields: [typeId], references: [id])
+  status      String           @default("SUBMITTED") // SUBMITTED | IN_REVIEW | APPROVED | ISSUED | REJECTED
+  purpose     String
+  notes       String?
+  urgency     String           @default("Normal")
+  serial      String?
+  appliedAt   DateTime         @default(now())
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  payment     Payment?
+  approvals   Approval[]
+  certificate Certificate?
+}
+
+model Payment {
+  id            String    @id @default(cuid())
+  requestId     String    @unique
+  request       Request   @relation(fields: [requestId], references: [id])
+  amount        Int
+  method        String    @default("UPI") // UPI | CASH | DD
+  upiTxnId      String?
+  status        String    @default("PENDING") // PENDING | PAID | FAILED
+  receiptNo     String?   @unique
+  receiptSentAt DateTime?
+  createdAt     DateTime  @default(now())
+  paidAt        DateTime?
+}
+
+model Approval {
+  id          String   @id @default(cuid())
+  requestId   String
+  request     Request  @relation(fields: [requestId], references: [id])
+  approverId  String?
+  approver    User?    @relation(fields: [approverId], references: [id])
+  stage       String   // e.g. "Submitted", "Payment", "Registrar Review", "Issued"
+  decision    String   // e.g. "SUBMITTED", "PAID", "APPROVED", "ISSUED", "REJECTED"
+  remarks     String?
+  createdAt   DateTime @default(now())
+}
+
+model Certificate {
+  id          String          @id @default(cuid())
+  requestId   String          @unique
+  request     Request         @relation(fields: [requestId], references: [id])
+  studentId   String
+  student     User            @relation(fields: [studentId], references: [id])
+  certTypeId  String
+  certType    CertificateType @relation(fields: [certTypeId], references: [id])
+  serialNo    String          @unique
+  qrToken     String          @unique
+  sha256Hash  String
+  issuedAt    DateTime        @default(now())
+}
+
+model AcademicDocument {
+  id          String    @id @default(cuid())
+  studentId   String
+  student     User      @relation(fields: [studentId], references: [id])
+  name        String    // "10th Marksheet", "12th Marksheet", "Aadhaar/ID", "Transfer Cert"
+  fileUrl     String?
+  status      String    @default("UPLOADED") // UPLOADED | PENDING | VERIFIED
+  uploadedAt  DateTime? @default(now())
+  createdAt   DateTime  @default(now())
+}

@@ -1,0 +1,37 @@
+{
+  "name": "ocrs-backend",
+  "version": "1.0.0",
+  "description": "Online Certificate Request System (OCRS) Backend API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "ocrs",
+    "certificates",
+    "express",
+    "postgresql",
+    "puppeteer"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/local-auth": "^3.0.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "googleapis": "^181.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^9.11.1",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.13",
+    "puppeteer": "^22.8.0",
+    "qrcode": "^1.5.3",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

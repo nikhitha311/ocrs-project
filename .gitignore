@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+*/node_modules/
+**/node_modules/
+
+# Environment (SECRETS)
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env
+
+# Credentials
+credentials.json
+**/credentials.json
+
+# Uploads (keep folder structure, ignore contents)
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/certificates/*
+!backend/certificates/.gitkeep
+
+# Builds
+dist/
+build/
+.next/
+out/
+.vite/
+*.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs/

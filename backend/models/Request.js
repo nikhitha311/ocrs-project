@@ -1,0 +1,41 @@
+const mongoose = require('mongoose');
+
+const requestSchema = new mongoose.Schema({
+  trackingId:        { type: String, required: true, unique: true },
+  certificateNumber: { type: String, required: true },
+  typeId:            { type: String, required: true },
+  certificateType:   { type: String, required: true },
+  studentName:       { type: String, required: true },
+  rollNumber:        { type: String, required: true },
+  department:        { type: String },
+  academicYear:      { type: String },
+  studentEmail:      { type: String },
+  purpose:           { type: String },
+  urgency:           { type: String, default: 'Normal' },
+  notes:             { type: String },
+  status:            { type: String, default: 'SUBMITTED' },
+  fee:               { type: Number, default: 0 },
+  appliedDate:       { type: String },
+  appliedTime:       { type: String },
+  appliedTimestamp:  { type: Number },
+  payment: {
+    amount:    { type: Number, default: 0 },
+    status:    { type: String, default: 'PENDING' },
+    method:    { type: String, default: 'UPI' },
+    upiTxnId:  { type: String },
+    receiptNo: { type: String },
+    paidAt:    { type: Date },
+  },
+  receiptNumber:     { type: String },
+  feePaid:           { type: Boolean, default: false },
+  paymentMethod:     { type: String },
+  paymentReference:  { type: String },
+  rejectionReason:   { type: String },
+  refundNotice:      { type: String },
+  dateRejected:      { type: String },
+  issuedAt:          { type: Date },
+  serialNo:          { type: String },
+  qrToken:           { type: String },
+}, { timestamps: true });
+
+module.exports = mongoose.model('Request', requestSchema);
