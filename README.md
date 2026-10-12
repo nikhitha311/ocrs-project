@@ -4,7 +4,7 @@ A modern full-stack web application for automated student certificate requests, 
 
 ---
 
-## 🚀 How to Run the Application
+## How to Run the Application
 
 ### 1. Backend Server (Port 5000)
 ```bash
@@ -23,7 +23,7 @@ npm run dev
 
 ---
 
-## 🌟 Features
+##  Features
 
 - **Student Portal**:
   - View status of certificate applications with real-time badges (Pending, Approved, Rejected).
@@ -42,3 +42,7 @@ npm run dev
 
 - **Live OAuth2 Diagnostics**:
   - Direct "Test Email" tool in the header to verify Google OAuth2 email delivery anytime.
+TEAM Members:
+24881A1236 - Kona Varshit Ram
+24881A12A1-  Mandhula Nikhitha
+24881A12G4 - Mukiri Aparna
